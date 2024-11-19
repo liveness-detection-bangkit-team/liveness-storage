@@ -1,8 +1,12 @@
 # Cloud Storage Flask API
 
+> [!IMPORTANT]
+>
+> - In development progress
+
 A simple Flask API for managing files in Google Cloud Storage.
 
-## Installation
+### Installation
 
 1. Clone this repository.
 2. Install the required packages with `pip install -r requirements.txt`.
@@ -12,19 +16,19 @@ A simple Flask API for managing files in Google Cloud Storage.
 
 ## API Endpoints
 
-### GET /files
+#### GET /files
 
 Get a list of all files in the storage bucket.
 
-### GET /files/:filename
+#### GET /files/:filename
 
 Get a file from the storage bucket.
 
-### POST /files
+#### POST /files
 
 Upload a file to the storage bucket.
 
-### DELETE /files/:filename
+#### DELETE /files/:filename
 
 Delete a file from the storage bucket.
 
