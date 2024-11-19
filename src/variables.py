@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Access environment variables
-SA_KEY = os.getenv("SA_KEY")
 PROJECT_ID = os.getenv("PROJECT_ID")
-
-# Replace 'your-bucket-name' with your actual bucket name
-BUCKET_NAME = "your-bucket-name"
+BUCKET_NAME = os.getenv("CLOUD_BUCKET_NAME")
+BUCKET_LOCATION = os.getenv("CLOUD_BUCKET_LOCATION")
