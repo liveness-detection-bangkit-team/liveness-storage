@@ -1,10 +1,13 @@
 import os
 from dotenv import load_dotenv
+from google.cloud import storage
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Access environment variables
-PROJECT_ID = os.getenv("PROJECT_ID")
-BUCKET_NAME = os.getenv("CLOUD_BUCKET_NAME")
-BUCKET_LOCATION = os.getenv("CLOUD_BUCKET_LOCATION")
+
+
+# Initialize the Google Cloud Storage client
+client = storage.Client()
+PROJECT_ID = client.project

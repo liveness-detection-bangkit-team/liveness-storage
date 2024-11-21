@@ -8,75 +8,121 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
-# Import BUCKET_NAME, BUCKET_LOCATION from the variables.py file
-from variables import BUCKET_NAME
+# Import bucket_name, BUCKET_LOCATION from the variables.py file
+# from variables import BU
 
 # Function to check if a file exists in a Google Cloud Storage bucket
-def check_gcs_file_exists(blob_name):
+def check_file(blob_name, bucket_name):
     client = storage.Client()
-    bucket = client.bucket(BUCKET_NAME)
+    bucket = client.bucket(bucket_name)
     blob = bucket.blob(blob_name)
     # Returns True if the file exists, False otherwise
     return blob.exists()  
     
 # Function to add a file to a bucket
-def add_file_to_bucket(file_name, folder_name):
-    # Initialize the storage client using default credentials (from environment variable)    
-    client = storage.Client()
-    # Get the bucket
-    bucket = client.bucket(BUCKET_NAME)
-    # Construct the full path to the file
-    file_path = f'file/{file_name}' 
-    # Split the file name and extension
-    name, ext = os.path.splitext(file_name)
-    
-    # Check if the file already exists in the bucket
-    counter = 0
-    while True:
-        # ternary operator, if true filename auto increment, otherwise keep the same
-        file_name = f'{name}_{counter}{ext}' if counter > 0 else file_name
-        # Path in the bucket
-        blob_name = f'{folder_name}/{file_name}'
+def upload_file(bucket_name, folder_name, file_name):
+    try:
+        # Initialize the storage client using default credentials (from environment variable)    
+        client = storage.Client()
+        # Get the bucket
+        bucket = client.bucket(bucket_name)
+        # Construct the full path to the file
+        file_path = f"file/{file_name}" 
+        # Split the file name and extension
+        name, ext = os.path.splitext(file_name)
         
-        if not check_gcs_file_exists(blob_name):
-            break
-        counter += 1
+        # Check if the file already exists in the bucket
+        counter = 0
+        while True:
+            # If the file already exists, add a counter to the file name
+            if counter > 0:
+                file_name = f"{name}_{counter}{ext}"
+            else:
+                file_name = file_name
+                
+            # Path in the bucket
+            blob_name = f"{folder_name}/{file_name}"
+            
+            if not check_file(blob_name, bucket_name):
+                break
+            counter += 1
 
-    # Create a blob and upload the file
-    blob = bucket.blob(blob_name)
-    blob.upload_from_filename(file_path)
+        # Create a blob and upload the file
+        blob = bucket.blob(blob_name)
+        blob.upload_from_filename(file_path)
+        return True, f"File '{file_name}' uploaded successfully in folder '{folder_name}'"
+    except Exception as e:
+        return False, f"Error occurred: {e}"
+    finally:
+        # Close the client
+        client.close()
 
-    print(f'File "{file_name}" uploaded successfully in folder "{folder_name}"')
+def replace_file(bucket_name, folder_name, file_name):
+    try:
+        # Initialize the storage client using default credentials (from environment variable)    
+        client = storage.Client()
+        # Get the bucket
+        bucket = client.bucket(bucket_name)
+        # Construct the full path to the file
+        file_path = f"file/{file_name}" 
 
-    # Close the client
-    client.close()
+        # Path in the bucket
+        blob_name = f"{folder_name}/{file_name}"
 
-def replace_file_in_bucket(file_name, folder_name):
-    # Initialize the storage client using default credentials (from environment variable)    
-    client = storage.Client()
-    # Get the bucket
-    bucket = client.bucket(BUCKET_NAME)
-    # Construct the full path to the file
-    file_path = f'file/{file_name}' 
+        # Check if the file exists in the bucket
+        if not check_file(blob_name, bucket_name):
+            return False, f"File '{blob_name}' does not exist in bucket '{bucket_name}'."
+        
+        # Create a blob and upload the file
+        blob = bucket.blob(blob_name)
+        blob.upload_from_filename(file_path)
 
-    # Path in the bucket
-    blob_name = f'{folder_name}/{file_name}'
+        return True, f"File '{file_name}' replaced successfully in folder '{folder_name}'"
+    except Exception as e:
+        return False, f"Error occurred: {e}"
+    finally:
+        # Close the client
+        client.close()
 
-    # Create a blob and upload the file
-    blob = bucket.blob(blob_name)
-    blob.upload_from_filename(file_path)
-
-    print(f'File "{file_name}" replaced successfully in folder "{folder_name}"')
-
-    # Close the client
-    client.close()
+# Function to rename a file in a Google Cloud Storage bucket
+def rename_file(bucket_name, folder_name, old_filename, new_filename):
+    try:
+        # Initialize the GCS client
+        client = storage.Client()
+        bucket = client.get_bucket(bucket_name)
+        
+        # Construct the old and new file paths in the bucket
+        old_name = f"{folder_name}/{old_filename}"
+        new_name = f"{folder_name}/{new_filename}"
+        
+        # Get the blob (object) for the old file
+        old_blob = bucket.blob(old_name)
+        # Check if the old file exists
+        if not old_blob.exists():
+            return False, f"The file '{old_name}' does not exist."
+        
+        # Copy the blob (file) to the new name (location)
+        new_blob = bucket.blob(new_name)
+        
+        # Copy the old blob to the new blob (this is how we "rename" the file)
+        bucket.copy_blob(old_blob, bucket, new_name)
+        
+        # After successful copy, delete the old blob (file)
+        old_blob.delete()
+        
+        return True, f"File renamed from '{old_filename}' to '{new_filename}' in folder '{folder_name}'."
+    except Exception as e:
+        return False, f"Error occurred: {e}"
+    finally:
+        # Close the client
+        client.close()
 
 # Function to delete a file from a Google Cloud Storage bucket
-def delete_file_in_bucket( folder_name, file_name):
+def delete_file(bucket_name, folder_name, file_name):
     # Initialize the storage client using default credentials (from environment variable)    
     client = storage.Client()
     # Get the bucket
-    bucket = client.bucket(BUCKET_NAME)
+    bucket = client.bucket(bucket_name)
 
     # Path in the bucket
     blob_name = f'{folder_name}/{file_name}'
@@ -85,11 +131,11 @@ def delete_file_in_bucket( folder_name, file_name):
     blob = bucket.blob(blob_name)
     try:
         blob.delete()
-        print(f"File '{blob_name}' deleted successfully from bucket '{BUCKET_NAME}'.")
+        return True, f"File '{blob_name}' deleted successfully from bucket '{bucket_name}'."
     except NotFound:
-        print(f"File '{blob_name}' not found in bucket '{BUCKET_NAME}'.")
-
-    # Close the client
-    client.close()
-
-add_file_to_bucket('test.txt', 'test')
+        return False, f"File '{blob_name}' not found in bucket '{bucket_name}'."
+    except Exception as e:
+        return False, f"Error occurred: {e}"
+    finally:
+        # Close the client
+        client.close()
