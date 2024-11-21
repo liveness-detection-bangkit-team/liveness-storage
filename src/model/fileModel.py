@@ -1,15 +1,6 @@
 import os
-import sys
 from google.cloud import storage
 from google.cloud.exceptions import NotFound
-
-# Add the parent directory to the Python path
-current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-
-# Import bucket_name, BUCKET_LOCATION from the variables.py file
-# from variables import BU
 
 # Function to check if a file exists in a Google Cloud Storage bucket
 def check_file(blob_name, bucket_name):
@@ -105,7 +96,7 @@ def rename_file(bucket_name, folder_name, old_filename, new_filename):
         new_blob = bucket.blob(new_name)
         
         # Copy the old blob to the new blob (this is how we "rename" the file)
-        bucket.copy_blob(old_blob, bucket, new_name)
+        bucket.copy_blob(old_blob, bucket, new_name) # !!!!!!!!
         
         # After successful copy, delete the old blob (file)
         old_blob.delete()
