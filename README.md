@@ -113,7 +113,7 @@
 >>  ```
 >>
 > ### ⚠️ WARNING
-> ##### when delete nested folders, you must keep in mind that it will delete all folders if it has no file in it.
+> ##### when delete nested folders, you must keep in mind that it will delete all folders including the parent folder if it has no file in it. Make sure the parent folder is not empty.
 >- **DELETE /folder/delete**  
 >>  Delete a subfolder from a bucket. 
 >>  **Request Body:**  
