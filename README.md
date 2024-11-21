@@ -48,6 +48,7 @@ The following environment variables are optional but recommended for development
 * `FLASK_ENV`: The environment for the Flask app (development, production, etc.).
 * `FLASK_DEBUG`: Whether to enable debug mode for the Flask app.
 
-## License
+## Contributing
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+Contributions are welcome! Please open a pull request with your changes.
+
