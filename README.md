@@ -4,10 +4,11 @@
 
 ## Installation
 1. Clone this repository.
-2. Install the required packages with `pip install -r requirements.txt`.
-3. Create a service account key file and download it as a JSON file.
-4. Set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of the key file.
-5. Run the Flask development server with `flask --debug run -h 0.0.0.0`.
+2. Create a virtual environment first with `pytho -m venv`
+3. Install the required packages with `pip install -r requirements.txt`.
+4. Create a service account key file and download it as a JSON file.
+5. Set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of the key file.
+6. Run the Flask development server with `flask --debug run -h 0.0.0.0`.
 
 ## API Endpoints
 > ---
