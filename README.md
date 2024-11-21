@@ -1,5 +1,9 @@
 # Cloud Storage Flask API
 
+> [!IMPORTANT]
+>
+> - In development progress
+
 A simple Flask API for managing files in Google Cloud Storage.
 
 ## Installation
@@ -47,3 +51,10 @@ The following environment variables are optional but recommended for development
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+/*************  ✨ Codeium Command ⭐  *************/
+## Contributing
+
+Contributions are welcome! Please open a pull request with your changes.
+
+/******  46211517-6dbf-4092-a17d-4f8cc1fd4233  *******/
