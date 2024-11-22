@@ -6,8 +6,8 @@ from google.cloud import storage
 load_dotenv()
 
 # Access environment variables
-
-
+DATABASE_URL = os.environ.get('DATABASE_URL')
+print(DATABASE_URL)
 # Initialize the Google Cloud Storage client
 client = storage.Client()
 PROJECT_ID = client.project
