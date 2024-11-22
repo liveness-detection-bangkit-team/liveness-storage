@@ -11,7 +11,6 @@ A simple Flask API for managing files and folders in Google Cloud Storage.**
 5. Run the Flask development server with `flask --debug run -h 0.0.0.0`.
 
 ## API Endpoints
- ---
 ### Bucket Management
 - **GET /buckets**
     List all buckets with details.
@@ -112,8 +111,8 @@ A simple Flask API for managing files and folders in Google Cloud Storage.**
   }
   ```
 
-!!!  WARNING
-    ##### when delete nested folders, you must keep in mind that it will delete all folders if it has no file in it.
+> ### ⚠️ WARNING
+> ##### when delete nested folders, you must keep in mind that it will delete all folders if it has no file in it.
  
 - **DELETE /folder/delete**  
   Delete a subfolder from a bucket. 
@@ -144,5 +143,3 @@ The following environment variables are required:
  ## Contributing
  
  Contributions are welcome! Please open an issue or submit a pull request for any changes or improvements.
-
- ---
