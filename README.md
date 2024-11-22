@@ -64,7 +64,7 @@ project/
 
 2. Create Bucket
    - Endpoint: **POST** `/bucket/create`
-   - Required `JSON`: `bucket_name`, `region`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string",
@@ -75,7 +75,7 @@ project/
 
 3. Delete Bucket
    - Endpoint: **DELETE** `/bucket/delete`
-   - Required `JSON`: `bucket_name`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string"
@@ -86,7 +86,7 @@ project/
 ### II. File Operations
 1. List Files
    - Endpoint: **GET** `/files`
-   - Required `JSON`: `bucket_name`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string"
@@ -96,7 +96,7 @@ project/
 
 2. Upload File
    - Endpoint: **POST** `/file/upload`
-   - Required `JSON`: `bucket_name`, `folder_name`, `file_name`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string",
@@ -108,7 +108,7 @@ project/
 
 3. Replace File
    - Endpoint: **PUT** `/file/replace`
-   - Required `JSON`: `bucket_name`, `folder_name`, `file_name`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string", 
@@ -120,7 +120,7 @@ project/
 
 4. Rename File
    - Endpoint: **PUT** `/file/rename`
-   - Required `JSON`: `bucket_name`, `folder_name`, `old_filename`, `new_filename`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string", 
@@ -133,7 +133,7 @@ project/
 
 5. Delete File
    - Endpoint: **DELETE** `/file/delete`
-   - Required `JSON`: `bucket_name`, `folder_name`, `file_name`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string", 
@@ -146,7 +146,7 @@ project/
 ### III. Folder Operations
 1. Create Folder
    - Endpoint: **POST** `/folder/create`
-   - Required `JSON`: `bucket_name`, `folder_name`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string", 
@@ -157,7 +157,7 @@ project/
 
 2. Rename Folder
    - Endpoint: **PUT** `/folder/rename`
-   - Required `JSON`: `bucket_name`, `old_foldername`, `new_foldername`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string", 
@@ -169,7 +169,7 @@ project/
 
 3. Delete Folder
    - Endpoint: **DELETE** `/folder/delete`
-   - Required `JSON`: `bucket_name`, `parent_folder`, `subfolder_name`
+   - Required `JSON`:
         ```json
         {
             "bucket_name": "string", 
