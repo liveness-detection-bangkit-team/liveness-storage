@@ -22,6 +22,7 @@ CORS(
     supports_credentials=True,
 )
 
+# Create the rate limit database
 create_db()
 
 # Start the Flask server

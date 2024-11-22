@@ -1,146 +1,233 @@
-# Cloud Storage Flask API
-A simple Flask API for managing files and folders in Google Cloud Storage.**
+# Cloud Storage Flask API Documentation
 
-**Build with : Python 3.13**
+## Project Overview
+This is a Flask-based REST API that provides a complete interface for managing Google Cloud Storage. It allows users to perform operations on buckets, files, and folders through simple HTTP requests.
 
-## Installation
-1. Clone this repository.
-2. Create a virtual environment first with `python -m venv`
-3. Install the required packages with `pip install -r requirements.txt`.
-4. Create a service account key file and download it as a JSON file.
-5. Set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of the key file.
-6. Run the Flask development server with `flask --debug run -h 0.0.0.0`.
+## Technical Stack
+- Python 3.13
+- Flask Framework
+- Google Cloud Storage
+- Environment Variables (.env)
 
-## API Endpoints
-### Bucket Management
-- **GET /buckets**
-    List all buckets with details.
+## Core Features
+1. Bucket Management
+   - List all buckets
+   - Create new buckets
+   - Delete buckets
 
-- **POST /bucket/create**
-    Create a new bucket with standard storage.
-    ##### Request Body (JSON):  
-    ```json
-    {
-        "bucket_name": "your-bucket-name",
-        "region": "bucket-region"
-    }
-    ```
+2. File Operations
+   - List all files
+   - Upload files
+   - Replace existing files
+   - Rename files
+   - Delete files
 
-- **DELETE /bucket/delete**
-    Delete a bucket.  
-    ##### Request Body (JSON):  
-    ```json
-    {
-        "bucket_name": "your-bucket-name"
-    }
-    ```
----
-### File Management
-- **GET /files**
-    Get all items from the bucket
-    ##### Request Body (JSON):  
-    ```json
-    {
-        "bucket_name": "your-bucket-name"
-    }
-    ```
-- **POST /file/upload**  
-    Upload a new file to a bucket.  
-    ##### Request Body (JSON):  
-    ```json
-    {
-        "bucket_name": "your-bucket-name",
-        "folder_name": "your-folder-name",
-        "file_name": "your-file-name"
-    }
-    ```
- 
-- **PUT /file/replace**  
-    Replace an existing file in a bucket.
-    ##### Request Body (JSON):  
-    ```json
-    {
-        "bucket_name": "your-bucket-name",
-        "folder_name": "your-folder-name",
-        "file_name": "your-file-name"
-    }
-    ```
+3. Folder Management
+   - Create folders
+   - Rename folders
+   - Delete folders (with nested folder support)
 
-- **PUT /file/rename**  
-    Rename a file in a bucket.  
-    ##### Request Body (JSON):
-    ```json
-    {
-        "bucket_name": "your-bucket-name",
-        "folder_name": "your-folder-name",
-        "old_filename": "old-file-name",
-        "new_filename": "new-file-name"
-    }
-    ```
+## Project Structure
+```bash
+project/
+├── .env                 # Environment configuration
+├── main.py              # Main application file
+├── key.json             # Google Cloud credentials
+├── requirements.txt     # Project dependencies
+├── README.md            # Project documentation
+├── .gitignore           # Git ignore file
+├── tests/               # Test suite
+└── src/                 # Source
+```
 
-- **DELETE /file/delete**  
-    Delete a file from a bucket.  
-    ##### Request Body (JSON): 
-    ```json
-    {
-        "bucket_name": "your-bucket-name",
-        "folder_name": "your-folder-name",
-        "file_name": "your-file-name"
-    }
-    ```
- ---
-### Folder Management
+## Setup Instructions
+### I. Environment Setup
+   1. Clone the repository
+   2. Create a Python virtual environment `python -m venv .venv`
+   3. Install dependencies: `pip install -r requirements.txt`
+   4. Set up Google Cloud credentials:
+      - Create a service account and download the JSON key
+      - Rename the key to `key.json` and place it in the project root
+   5. Configure environment variables in `.env` file
+   6. Run the application: `flask --debug run -h 0.0.0.0`
 
-- **POST /folder/create**  
-  Create a new folder in a bucket.  
-  **Request Body (JSON):**  
-  ```json
-  {
-    "bucket_name": "your-bucket-name",
-    "folder_name": "your-folder-name"
-  }
-  ```
+### II. Required Environment Variables
+   1. `GOOGLE_APPLICATION_CREDENTIALS`: Points to `key.json`
+   2. `FLASK_APP`: Set to main.py
 
-- **PUT /folder/rename**  
-  Rename a folder in a bucket.  
-  **Request Body (JSON):**  
-  ```json
-  {
-    "bucket_name": "your-bucket-name",
-    "old_foldername": "old-folder-name",
-    "new_foldername": "new-folder-name"
-  }
-  ```
+## API Usage Guide
 
-> ### ⚠️ WARNING
-> ##### when delete nested folders, you must keep in mind that it will delete all folders if it has no file in it.
- 
-- **DELETE /folder/delete**  
-  Delete a subfolder from a bucket. 
-  **Request Body (JSON):**  
-  ```json
-  {
-    "bucket_name": "your-bucket-name",
-    "parent_folder": "parent-folder-name",
-    "subfolder_name": "sub-folder-name"
-  }
-  ```
+### I. Bucket Operations
+1. List Buckets
+   - Endpoint: **GET** `/buckets`
+   - Returns: List of all available buckets
 
-## Environment Variables
+2. Create Bucket
+   - Endpoint: **POST** `/bucket/create`
+   - Required `JSON`: `bucket_name`, `region`
+        ```json
+        {
+            "bucket_name": "string",
+            "region": "string"
+        }
+        ```
+   - Creates a new storage bucket
 
-The following environment variables are required:
+3. Delete Bucket
+   - Endpoint: **DELETE** `/bucket/delete`
+   - Required `JSON`: `bucket_name`
+        ```json
+        {
+            "bucket_name": "string"
+        }
+        ```
+   - Removes specified bucket
 
- - `GOOGLE_APPLICATION_CREDENTIALS`: The path to the service account key file.
- - `FLASK_APP`: main.py. The main file of the Flask app.
+### II. File Operations
+1. List Files
+   - Endpoint: **GET** `/files`
+   - Required `JSON`: `bucket_name`
+        ```json
+        {
+            "bucket_name": "string"
+        }
+        ```
+   - Lists all files in bucket
 
-## Development
+2. Upload File
+   - Endpoint: **POST** `/file/upload`
+   - Required `JSON`: `bucket_name`, `folder_name`, `file_name`
+        ```json
+        {
+            "bucket_name": "string",
+            "folder_name": "string",
+            "file_name": "string"
+        }
+        ```
+   - Uploads new file to specified location
 
- The following environment variables are optional but recommended for development:
- 
- * `FLASK_APP`: The name of the Flask app.
- * `FLASK_ENV`: The environment for the Flask app (development, production, etc.).
- * `FLASK_DEBUG`: Whether to enable debug mode for the Flask app.
- 
- ## Contributing
- 
- Contributions are welcome! Please open an issue or submit a pull request for any changes or improvements.
+3. Replace File
+   - Endpoint: **PUT** `/file/replace`
+   - Required `JSON`: `bucket_name`, `folder_name`, `file_name`
+        ```json
+        {
+            "bucket_name": "string", 
+            "folder_name": "string", 
+            "file_name": "string"
+        }
+        ```
+   - Replaces existing file
+
+4. Rename File
+   - Endpoint: **PUT** `/file/rename`
+   - Required `JSON`: `bucket_name`, `folder_name`, `old_filename`, `new_filename`
+        ```json
+        {
+            "bucket_name": "string", 
+            "folder_name": "string", 
+            "old_filename": "string", 
+            "new_filename": "string"
+        }
+        ```
+   - Renames existing file
+
+5. Delete File
+   - Endpoint: **DELETE** `/file/delete`
+   - Required `JSON`: `bucket_name`, `folder_name`, `file_name`
+        ```json
+        {
+            "bucket_name": "string", 
+            "folder_name": "string", 
+            "file_name": "string"
+        }
+        ```
+   - Removes specified file
+
+### III. Folder Operations
+1. Create Folder
+   - Endpoint: **POST** `/folder/create`
+   - Required `JSON`: `bucket_name`, `folder_name`
+        ```json
+        {
+            "bucket_name": "string", 
+            "folder_name": "string"
+        }
+        ```
+   - Creates new folder
+
+2. Rename Folder
+   - Endpoint: **PUT** `/folder/rename`
+   - Required `JSON`: `bucket_name`, `old_foldername`, `new_foldername`
+        ```json
+        {
+            "bucket_name": "string", 
+            "old_foldername": "string", 
+            "new_foldername": "string"
+        }
+        ```
+   - Renames existing folder
+
+3. Delete Folder
+   - Endpoint: **DELETE** `/folder/delete`
+   - Required `JSON`: `bucket_name`, `parent_folder`, `subfolder_name`
+        ```json
+        {
+            "bucket_name": "string", 
+            "parent_folder": "string", 
+            "subfolder_name": "string"
+        }
+   - Deletes folder and contents
+
+## Important Notes
+- Nested folder deletion will remove all empty folders
+- All requests require proper JSON formatting
+- Service account key must have appropriate permissions
+- Development mode can be enabled with `FLASK_DEBUG=1`
+
+## Development Guidelines
+1. Use virtual environment for isolation
+2. Follow RESTful API principles
+3. Test all endpoints before deployment
+4. Keep credentials secure
+5. Monitor API usage and performance
+
+## Security Considerations
+- Store credentials securely
+- Use HTTPS in production
+- Implement proper authentication
+- Regular security audits
+- Monitor access logs
+
+This project provides a robust interface for Google Cloud Storage operations while maintaining simplicity and ease of use.
+
+## Error Handling
+The API uses standard HTTP status codes for error responses:
+- `200: Success`
+- `400: Bad Request`
+- `404: Not Found`
+- `500: Internal Server Error`
+
+## Best Practices
+1. Always use environment variables for sensitive information
+2. Implement proper authentication and authorization
+3. Use meaningful and consistent naming conventions
+4. Handle errors gracefully and provide informative error messages
+5. Implement logging for better debugging and monitoring
+6. Use HTTPS for all API communications
+7. Implement rate limiting to prevent abuse
+
+## Testing
+- Unit tests are located in the `tests/` directory
+- Run tests using: `python -m unittest discover tests`
+
+## Deployment
+1. Set up a Google Cloud project
+2. Enable Google Cloud Storage API
+3. Deploy the application to Google App Engine or your preferred hosting platform
+4. Configure environment variables in the deployment environment
+
+## Contributing
+1. Fork the repository
+2. Create a new branch for your feature
+3. Make your changes and write tests
+4. Submit a pull request with a clear description of your changes
