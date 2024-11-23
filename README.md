@@ -49,7 +49,8 @@ project/
       - Create a service account and download the JSON key
       - Rename the key to `key.json` and place it in the project root
    5. Configure environment variables in `.env` file
-   6. Run the application: `flask --debug run -h 0.0.0.0`
+   6. Create a folder name `file` and copy or move the file that you want to upload there
+   7. Run the application: `flask --debug run -h 0.0.0.0`
 
 ### II. Required Environment Variables
    1. `GOOGLE_APPLICATION_CREDENTIALS`: Points to `key.json`

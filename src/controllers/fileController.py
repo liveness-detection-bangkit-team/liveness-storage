@@ -12,7 +12,7 @@ def upload_file_controllers(request_json):
     file_name = request_json.get("file_name")
     folder_name = request_json.get("folder_name")
     # upload file
-    isValid, message = upload_file(bucket_name, file_name, folder_name)
+    isValid, message = upload_file(bucket_name, folder_name, file_name)
     # failed to upload file
     if not isValid:
         return jsonify({"status_code": 400, "error": message}), 400
@@ -24,7 +24,7 @@ def replace_file_controllers(request_json):
     file_name = request_json.get("file_name")
     folder_name = request_json.get("folder_name")
     # replace file
-    isValid, message = replace_file(bucket_name, file_name, folder_name)
+    isValid, message = replace_file(bucket_name, folder_name, file_name)
     # failed to replace file
     if not isValid:
         return jsonify({"status_code": 400, "error": message}), 400
