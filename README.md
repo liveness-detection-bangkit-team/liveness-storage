@@ -92,7 +92,6 @@ project/
         }
         ```
 
-
 3. Delete Bucket
    **Removes specified bucket**
    - Endpoint: **DELETE** `/bucket/delete`
@@ -237,6 +236,7 @@ This project provides a robust interface for Google Cloud Storage operations whi
 ## Error Handling
 
 The API uses standard HTTP status codes for error responses:
+
 - `200: Success`
 - `400: Bad Request`
 - `404: Not Found`
