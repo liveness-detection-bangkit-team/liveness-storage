@@ -1,6 +1,4 @@
-.env
 .venv
-key.json
 __pycache__
 rate_limit.db
 tempCodeRunnerFile*
