@@ -1,0 +1,5 @@
+.venv
+__pycache__
+rate_limit.db
+tempCodeRunnerFile*
+test*
