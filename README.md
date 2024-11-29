@@ -120,11 +120,9 @@ project/
    - Required `form-data`:
 
       ```bash
-        {
-            "file": filename.ext,
-            "bucket_name": "string",
-            "folder_name": "string"
-        }
+      "file": filename.ext,
+      "bucket_name": "string",
+      "folder_name": "string"
       ```
 
 3. Replace File
@@ -133,12 +131,10 @@ project/
    - Required `form-data`:
 
       ```bash
-        {
-            "file": filename.ext,
-            "bucket_name": "string",
-            "folder_name": "string"
-            "old_filename": "string",
-        }
+      "file": filename.ext,
+      "bucket_name": "string",
+      "folder_name": "string"
+      "old_filename": "string",
       ```
 
 4. Rename File
