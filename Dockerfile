@@ -13,8 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the content of the local src directory to the working directory
 COPY . .
 
+# Set the environment variables
+ENV port=8080
+
 # Expose the port on which the app will run
-EXPOSE  5000
+EXPOSE 8080
 
 # Set the environment variable
 ENV FLASK_APP=main.py
