@@ -16,15 +16,14 @@ def upload_file_controllers(request):
         return jsonify({"status_code": 400, "error": "No file part"}), 400
     # Get the file from the request
     file = request.files['file']
+
     # Check if the file is empty
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
-    # Secure the filename to prevent directory traversal
-    filename = secure_filename(file.filename)
-    
     # Get the JSON data from the request
     bucket_name = request.form.get("bucket_name")
     folder_name = request.form.get("folder_name")
+
     # Parse JSON string to dictionary
     try:
         bucket_name = json.loads(bucket_name)  
@@ -38,17 +37,7 @@ def upload_file_controllers(request):
     isValid = check_bucket_exists(bucket_name)
     if not isValid:
         return jsonify({"status_code": 404, "error": f"Bucket '{bucket_name}' does not exist"}), 404
-    # Return a response with the file's path and JSON data (if any)
-    # response = {
-    #     'filename': file.filename,
-    #     # 'size': os.path.getsize(filename),  # File size in bytes
-    #     'bucket_name': bucket_name,
-    #     'folder_name': folder_name
-    # }
 
-    # return jsonify(response), 200
-    # bucket_name = request.get("bucket_name")
-    # folder_name = request.get("folder_name")
     # # upload file
     isValid, message = upload_file(bucket_name, folder_name, file)
     # failed to upload file

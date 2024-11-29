@@ -17,8 +17,6 @@ def upload_file(bucket_name, folder_name, file):
         client = storage.Client()
         # Get the bucket
         bucket = client.bucket(bucket_name)
-        # Construct the full path to the file
-        # file_path = f"file/{file_name}" 
         # Split the file name and extension
         name, ext = os.path.splitext(file.filename)
         
@@ -32,16 +30,24 @@ def upload_file(bucket_name, folder_name, file):
                 file_name = file.filename
                 
             # Path in the bucket
-            blob_name = f"{folder_name}/{file_name}"
+            # If folder_name is empty, use the file name as the blob name
+            if folder_name == "":
+                blob_name = file_name
+                response = f"File '{file_name}' uploaded successfully in main folder"
+            else:
+                blob_name = f"{folder_name}/{file_name}"
+                response = f"File '{file_name}' uploaded successfully in folder '{folder_name}'"
             
+            # Check if the file already exists in the bucket with the same name
             if not check_file(blob_name, bucket_name):
                 break
             counter += 1
-
+        
         # Create a blob and upload the file
         blob = bucket.blob(blob_name)
-        blob.upload_from_filename(file, content_type=file.content_type)
-        return True, f"File '{file.filename}' uploaded successfully in folder '{folder_name}'"
+        blob.upload_from_file(file, content_type=file.content_type)
+        
+        return True, response
     except Exception as e:
         return False, f"Error occurred: {e}"
     finally:
