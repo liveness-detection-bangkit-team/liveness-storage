@@ -2,14 +2,6 @@ import os
 from google.cloud import storage
 from google.cloud.exceptions import NotFound
 
-# Function to check if a file exists in a Google Cloud Storage bucket
-def check_file(blob_name, bucket_name):
-    client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    # Returns True if the file exists, False otherwise
-    return blob.exists()  
-    
 # Function to add a file to a bucket
 def upload_file(bucket_name, folder_name, file):
     try:
@@ -25,24 +17,27 @@ def upload_file(bucket_name, folder_name, file):
         while True:
             # If the file already exists, add a counter to the file name
             if counter > 0:
-                file_name = f"{name}_{counter}{ext}"
+                file_name = f"{name}({counter}){ext}"
             else:
                 file_name = file.filename
-                
-            # Path in the bucket
+            
             # If folder_name is empty, use the file name as the blob name
             if folder_name == "":
                 blob_name = file_name
-                response = f"File '{file_name}' uploaded successfully in main folder"
             else:
                 blob_name = f"{folder_name}/{file_name}"
-                response = f"File '{file_name}' uploaded successfully in folder '{folder_name}'"
-            
+
             # Check if the file already exists in the bucket with the same name
-            if not check_file(blob_name, bucket_name):
+            if not bucket.blob(blob_name).exists():
                 break
             counter += 1
         
+        # Give response message based on the folder_name
+        if folder_name == "":
+            response = f"File '{file_name}' uploaded successfully in main folder"
+        else:
+            response = f"File '{file_name}' uploaded successfully in folder '{folder_name}'"
+
         # Create a blob and upload the file
         blob = bucket.blob(blob_name)
         blob.upload_from_file(file, content_type=file.content_type)
@@ -54,27 +49,36 @@ def upload_file(bucket_name, folder_name, file):
         # Close the client
         client.close()
 
-def replace_file(bucket_name, folder_name, file_name):
+def replace_file(bucket_name, folder_name, file, old_filename):
     try:
         # Initialize the storage client using default credentials (from environment variable)    
         client = storage.Client()
         # Get the bucket
         bucket = client.bucket(bucket_name)
-        # Construct the full path to the file
-        file_path = f"file/{file_name}" 
 
+
+        old_path = f"{folder_name}/{old_filename}"
         # Path in the bucket
-        blob_name = f"{folder_name}/{file_name}"
-
-        # Check if the file exists in the bucket
-        if not check_file(blob_name, bucket_name):
+        if folder_name == "":
+            blob_name = file.filename
+            old_path = old_filename
+        else:
+            blob_name = old_path
+        # two option for replace, just replace or replace and delete old file
+        # Check if the old file already exists in the bucket
+        if not bucket.blob(old_path).exists():
             return False, f"File '{blob_name}' does not exist in bucket '{bucket_name}'."
-        
+        # Check if the new file already exists in the bucket
+        # if not check_file(new_path, bucket_name):
+        #     return False, f"File '{blob_name}' already exists in bucket '{bucket_name}'."
+        file.filename = old_filename
+        print(file)
         # Create a blob and upload the file
         blob = bucket.blob(blob_name)
-        blob.upload_from_filename(file_path)
+        blob.upload_from_file(file, content_type=file.content_type)
+        # blob.delete()
 
-        return True, f"File '{file_name}' replaced successfully in folder '{folder_name}'"
+        return True, f"File '{file.filename}' replaced successfully in folder '{folder_name}'"
     except Exception as e:
         return False, f"Error occurred: {e}"
     finally:

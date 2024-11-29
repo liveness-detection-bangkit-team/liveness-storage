@@ -91,14 +91,12 @@ def upload_file_route():
 # Replace a file in a bucket
 @routes.route('/file/replace', methods=['PUT'])
 def replace_file_route():
-    # Get the JSON data from the request
-    request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     if is_rate_limited(ip_address):
         return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
-    return replace_file_controllers(request_json)
+    return replace_file_controllers(request)
 
 # Rename a file in a bucket
 @routes.route('/file/rename', methods=['PUT'])
