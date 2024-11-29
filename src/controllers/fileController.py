@@ -1,6 +1,5 @@
 from flask import jsonify
 import json
-from werkzeug.utils import secure_filename
 from src.handler.bucketHandler import check_bucket_exists
 from src.handler.fileHandler import (
     upload_file, 

@@ -81,9 +81,6 @@ def bucket_list_route():
 # Upload a new file to a bucket
 @routes.route('/file/upload', methods=['POST'])
 def upload_file_route():
-    # Get the JSON data from the request
-    # request_json = request.get_json()
-    # request_files = request.files['file']
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     if is_rate_limited(ip_address):
