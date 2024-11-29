@@ -60,7 +60,7 @@ project/
    2. Create a Python virtual environment `python -m venv .venv`
    3. Install dependencies: `pip install -r requirements.txt`
    4. Set up Google Cloud credentials:
-      - Create a service account and download the JSON key
+      - Create a service account and download the `JSON` key
       - Rename the key to `key.json` and place it in the project root
    5. Configure environment variables in `.env` file
    6. Run the application: `flask --debug run -h 0.0.0.0`
@@ -119,26 +119,27 @@ project/
    - Endpoint: **POST** `/file/upload`
    - Required `form-data`:
 
-        ```bash
+      ```bash
         {
             "file": filename.ext,
             "bucket_name": "string",
             "folder_name": "string"
         }
-        ```
+      ```
 
 3. Replace File
    **Replaces existing file with new file**
    - Endpoint: **PUT** `/file/replace`
-   - Required `JSON`:
+   - Required `form-data`:
 
-        ```json
+      ```bash
         {
-            "bucket_name": "string", 
-            "folder_name": "string", 
-            "file_name": "string"
+            "file": filename.ext,
+            "bucket_name": "string",
+            "folder_name": "string"
+            "old_filename": "string",
         }
-        ```
+      ```
 
 4. Rename File
    **Renames existing file**
