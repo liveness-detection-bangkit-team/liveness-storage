@@ -1,5 +1,11 @@
 .venv
 __pycache__
+.vscode
+.env
+.env.example
+key.json
+key.json.example
+README.md
 rate_limit.db
 tempCodeRunnerFile*
 test*
