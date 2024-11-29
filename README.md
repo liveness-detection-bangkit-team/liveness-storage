@@ -49,8 +49,7 @@ project/
     │   ├── fileHandler.py       # file handler
     │   └── folderModel.py       # folder handler
     ├── rateLimiter.py        # Rate limiting middleware
-    ├── routes.py             # API routes
-    └── variables.py          # Utility functions
+    └── routes.py             # API routes
 ```
 
 ## Setup Instructions

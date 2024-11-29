@@ -56,29 +56,21 @@ def replace_file(bucket_name, folder_name, file, old_filename):
         # Get the bucket
         bucket = client.bucket(bucket_name)
 
-
-        old_path = f"{folder_name}/{old_filename}"
         # Path in the bucket
         if folder_name == "":
-            blob_name = file.filename
-            old_path = old_filename
+            blob_name = old_filename
         else:
-            blob_name = old_path
-        # two option for replace, just replace or replace and delete old file
-        # Check if the old file already exists in the bucket
-        if not bucket.blob(old_path).exists():
-            return False, f"File '{blob_name}' does not exist in bucket '{bucket_name}'."
-        # Check if the new file already exists in the bucket
-        # if not check_file(new_path, bucket_name):
-        #     return False, f"File '{blob_name}' already exists in bucket '{bucket_name}'."
-        file.filename = old_filename
-        print(file)
+            blob_name = f"{folder_name}/{old_filename}"
+
+        # Check if the old file exists in the bucket
+        if not bucket.blob(blob_name).exists():
+            return False, f"File '{blob_name}' does not exist in bucket '{folder_name}'."
+
         # Create a blob and upload the file
         blob = bucket.blob(blob_name)
         blob.upload_from_file(file, content_type=file.content_type)
-        # blob.delete()
 
-        return True, f"File '{file.filename}' replaced successfully in folder '{folder_name}'"
+        return True, f"File '{file.filename}' success to replace file '{old_filename}'"
     except Exception as e:
         return False, f"Error occurred: {e}"
     finally:
