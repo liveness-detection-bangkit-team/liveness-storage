@@ -1,8 +1,7 @@
 from flask import jsonify
-from model.folderModel import (
+from src.handler.folderHandler import (
     create_folder,
     rename_folder,
-    # delete_folder
     delete_subfolder
 )
 

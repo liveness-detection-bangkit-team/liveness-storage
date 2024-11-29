@@ -1,5 +1,5 @@
 from flask import jsonify
-from src.model.bucketModel import (
+from src.handler.bucketHandler import (
     list_buckets_with_details,
     check_bucket_exists,
     create_gcs_bucket,

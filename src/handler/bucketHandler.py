@@ -1,17 +1,9 @@
-import json, os, sys
+import json
 from flask import jsonify
 from collections import defaultdict
 from google.cloud import storage
 from google.auth.exceptions import DefaultCredentialsError
 from google.cloud.exceptions import NotFound
-
-# Add the parent directory to the Python path
-current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
-
-# Import PROJECT_ID from the variables.py file
-from variables import PROJECT_ID
 
 # Function to list buckets with details
 def list_buckets_with_details():
@@ -32,7 +24,7 @@ def list_buckets_with_details():
     # Close the client
     client.close()
 
-    return jsonify({f'Buckets in "{PROJECT_ID}" ': response})
+    return jsonify({f"Buckets in '{client.project}' ": response})
 
 # Function to check if a bucket exists
 def check_bucket_exists(bucket_name):
@@ -42,7 +34,7 @@ def check_bucket_exists(bucket_name):
     try:
         storage_client.get_bucket(bucket_name)
         return True  # Bucket exists
-    except NotFound:
+    except:
         return False  # Bucket does not exist
 
 # Function to create a new Google Cloud Storage bucket
