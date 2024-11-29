@@ -11,16 +11,16 @@ def check_file(blob_name, bucket_name):
     return blob.exists()  
     
 # Function to add a file to a bucket
-def upload_file(bucket_name, folder_name, file_name):
+def upload_file(bucket_name, folder_name, file):
     try:
         # Initialize the storage client using default credentials (from environment variable)    
         client = storage.Client()
         # Get the bucket
         bucket = client.bucket(bucket_name)
         # Construct the full path to the file
-        file_path = f"file/{file_name}" 
+        # file_path = f"file/{file_name}" 
         # Split the file name and extension
-        name, ext = os.path.splitext(file_name)
+        name, ext = os.path.splitext(file.filename)
         
         # Check if the file already exists in the bucket
         counter = 0
@@ -29,7 +29,7 @@ def upload_file(bucket_name, folder_name, file_name):
             if counter > 0:
                 file_name = f"{name}_{counter}{ext}"
             else:
-                file_name = file_name
+                file_name = file.filename
                 
             # Path in the bucket
             blob_name = f"{folder_name}/{file_name}"
@@ -40,8 +40,8 @@ def upload_file(bucket_name, folder_name, file_name):
 
         # Create a blob and upload the file
         blob = bucket.blob(blob_name)
-        blob.upload_from_filename(file_path)
-        return True, f"File '{file_name}' uploaded successfully in folder '{folder_name}'"
+        blob.upload_from_filename(file, content_type=file.content_type)
+        return True, f"File '{file.filename}' uploaded successfully in folder '{folder_name}'"
     except Exception as e:
         return False, f"Error occurred: {e}"
     finally:

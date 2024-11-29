@@ -42,7 +42,7 @@ def check_bucket_exists(bucket_name):
     try:
         storage_client.get_bucket(bucket_name)
         return True  # Bucket exists
-    except NotFound:
+    except:
         return False  # Bucket does not exist
 
 # Function to create a new Google Cloud Storage bucket
