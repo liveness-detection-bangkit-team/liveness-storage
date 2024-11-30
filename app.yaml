@@ -1,1 +1,5 @@
-runtime: python313 # Python version
+runtime: python312 # Python version
+
+handlers:
+  - url: /.*
+    script: auto

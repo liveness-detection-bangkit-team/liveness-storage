@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.rateLimiter import is_rate_limited
+# from src.rateLimiter import is_rate_limited
 from src.controllers.bucketController import (
     create_bucket_controllers,
     delete_bucket_controllers,
@@ -25,8 +25,8 @@ routes = Blueprint('routes', __name__)
 def get_resource():
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return jsonify({"data": "Here is your resource!"})
 
@@ -36,8 +36,8 @@ def get_resource():
 def get_buckets_route():
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return list_buckets_with_details_controllers()
 
@@ -48,8 +48,8 @@ def create_bucket_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return create_bucket_controllers(request_json)
 
@@ -60,8 +60,8 @@ def delete_bucket_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return delete_bucket_controllers(request_json)
 
@@ -72,8 +72,8 @@ def bucket_list_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return list_objects_controllers(request_json)
 
@@ -83,8 +83,8 @@ def bucket_list_route():
 def upload_file_route():
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return upload_file_controllers(request)
 
@@ -93,8 +93,8 @@ def upload_file_route():
 def replace_file_route():
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return replace_file_controllers(request)
 
@@ -105,8 +105,8 @@ def rename_file_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return rename_file_controllers(request_json)
 
@@ -117,8 +117,8 @@ def delete_file_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return delete_file_controllers(request_json)
 
@@ -130,8 +130,8 @@ def create_folder_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return create_nested_folders(request_json)
 
@@ -142,8 +142,8 @@ def rename_folder_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return rename_nested_folders(request_json)
 
@@ -154,7 +154,7 @@ def delete_folder_route():
     request_json = request.get_json()
     ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
-    if is_rate_limited(ip_address):
-        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+    # if is_rate_limited(ip_address):
+    #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
     return delete_nested_folders(request_json)
