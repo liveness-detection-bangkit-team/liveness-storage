@@ -28,7 +28,7 @@ def get_resource():
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
     # If not rate limited, proceed with the request
-    return jsonify({"data": "Here is your resource!"})
+    return jsonify({"message": "Successfully connected!", "status_code": 200})
 
 # ==============================================================================
 # List all buckets
