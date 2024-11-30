@@ -21,9 +21,9 @@ from src.controllers.folderController import (
 routes = Blueprint('routes', __name__)
 
 # Example route with rate limiting
-@routes.route('/test', methods=['GET'])
+@routes.route('/', methods=['GET'])
 def get_resource():
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -34,7 +34,7 @@ def get_resource():
 # List all buckets
 @routes.route('/buckets', methods=['GET'])
 def get_buckets_route():
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -46,7 +46,7 @@ def get_buckets_route():
 def create_bucket_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -58,7 +58,7 @@ def create_bucket_route():
 def delete_bucket_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -70,7 +70,7 @@ def delete_bucket_route():
 def bucket_list_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -81,7 +81,7 @@ def bucket_list_route():
 # Upload a new file to a bucket
 @routes.route('/file/upload', methods=['POST'])
 def upload_file_route():
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -91,7 +91,7 @@ def upload_file_route():
 # Replace a file in a bucket
 @routes.route('/file/replace', methods=['PUT'])
 def replace_file_route():
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -103,7 +103,7 @@ def replace_file_route():
 def rename_file_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -115,7 +115,7 @@ def rename_file_route():
 def delete_file_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -128,7 +128,7 @@ def delete_file_route():
 def create_folder_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -140,7 +140,7 @@ def create_folder_route():
 def rename_folder_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
@@ -152,7 +152,7 @@ def rename_folder_route():
 def delete_folder_route():
     # Get the JSON data from the request
     request_json = request.get_json()
-    ip_address = request.remote_addr  # Get the client's IP address
+    # ip_address = request.remote_addr  # Get the client's IP address
     #  Check if the IP address is rate limited
     # if is_rate_limited(ip_address):
     #     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
