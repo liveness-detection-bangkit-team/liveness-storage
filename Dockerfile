@@ -20,8 +20,8 @@ ENV port=8080
 EXPOSE 8080
 
 # Set the environment variable
-ENV FLASK_APP=main.py
+# If you are using Flask, set the FLASK_APP environment variable
+# ENV FLASK_APP=main.py
 
 # Specify the command to run on container start
-# CMD ["flask", "run", "--host", "0.0.0.0"]
 CMD [ "python", "main.py" ]
